@@ -183,8 +183,9 @@ void LCD_Print(char *str,char *a)
     Display_print1(dispHandle,line++,0,str,a);
   }
  
-
 }
+
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -240,7 +241,7 @@ int main(void)
   APP_STATE = NB_NONE;
   // …Ë÷√∫ÙŒ¸µ∆
   HAL_LPTIM_PWM_Start(&hlptim1, 99,0);
-  user_pwm_setvalue(0); 
+  user_pwm_setvalue(99); 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -349,7 +350,7 @@ int main(void)
     }
     // ∫ÙŒ¸µ∆≥Ã–Ú£ª
    if(is_rgb_pwm){
-       HAL_Delay(10);  
+       HAL_Delay(10);
        if(pwm_value == 0) step = 1;
        if(pwm_value == 99) step = -1;
        pwm_value += step;
@@ -580,6 +581,7 @@ void AppKey_cb(uint8_t key)
 // return : none
 int  NB_MsgreportCb(msg_types_t types,int len,char* msg)
 {
+  volatile uint16_t pwm_values = 0;
   switch(types)
   {
   case MSG_INIT:
@@ -695,15 +697,37 @@ int  NB_MsgreportCb(msg_types_t types,int len,char* msg)
     {
       printf("\r\nUDP_RECE=%s\r\n",msg);
       LCD_Print(msg,NULL);
-      if(msg[0] == '1')
-        {
-            LCD_Print("lamp open",NULL);
-            is_rgb_pwm = 1;
-        }else if (msg[0] == '0'){
-            LCD_Print("lamp close",NULL);
+      if(msg[0] == 'C' || msg[0] == 'c' || sizeof(msg) == 2){
+          if(msg[1] == '1')
+            {
+                LCD_Print("lamp open",NULL);
+                is_rgb_pwm = 1;
+            }else if (msg[1] == '0'){
+                LCD_Print("lamp close",NULL);
+                is_rgb_pwm = 0;
+                user_pwm_setvalue(97);
+            }
+      }else if (msg[0] == 'S' || msg[0] == 's'){
+        if(sizeof(msg) == 3){
             is_rgb_pwm = 0;
-            user_pwm_setvalue(0);
+          user_pwm_setvalue(99);
+          pwm_values = msg[1]-48;
+          printf("\r\nssssssss %d\r\n",pwm_values);
+          user_pwm_setvalue(pwm_values);
+        }else if(sizeof(msg) == 4){
+          is_rgb_pwm = 0;
+          user_pwm_setvalue(99);
+          uint16_t aa = msg[1]-48;
+          uint16_t bb = msg[2]-48;
+          printf("\r\nssssssss %d\r\n",pwm_values);
+          pwm_values = aa+aa+aa+aa+aa+aa+aa+aa+aa+aa+bb;
+          printf("\r\nssssssss %d\r\n",aa);
+          printf("\r\nssssssss %d\r\n",bb);
+          printf("\r\nssssssss %d\r\n",pwm_values);
+          user_pwm_setvalue(pwm_values);
         }
+          
+      }
     }
     break;
   case MSG_COAP:

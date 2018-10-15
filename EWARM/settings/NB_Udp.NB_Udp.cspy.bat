@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\EWARM\settings\NB_Udp.NB_Udp.general.xcl" --backend -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\EWARM\settings\NB_Udp.NB_Udp.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\Nb-loT-double\EWARM\settings\NB_Udp.NB_Udp.general.xcl" --backend -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\Nb-loT-double\EWARM\settings\NB_Udp.NB_Udp.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\EWARM\settings\NB_Udp.NB_Udp.general.xcl" "--debug_file=%~1" --backend -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\EWARM\settings\NB_Udp.NB_Udp.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\Nb-loT-double\EWARM\settings\NB_Udp.NB_Udp.general.xcl" "--debug_file=%~1" --backend -f "E:\Nb\02-按键触发UDP协议数据\NB_UDP\Nb-loT-double\EWARM\settings\NB_Udp.NB_Udp.driver.xcl" 
 
 @echo off 
 :end
