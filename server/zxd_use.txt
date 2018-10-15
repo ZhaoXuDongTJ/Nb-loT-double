@@ -1,0 +1,23 @@
+import socket
+import leancloud
+import json
+
+class Todo(leancloud.Object):
+    pass
+
+leancloud.init("{{DA0TIhjmWJOPcgQHxFDuPqeM-gzGzoHsz}}", "{{TBBqQ1V6YXhFME64RLVhHAYj}}")
+address = ('192.168.0.51', 9000)
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.bind(address)
+
+while True:
+    data, addr = s.recvfrom(2048)
+    if not data:
+        break
+    print "received:", data, "from", addr
+    j = json.loads(str)
+    todo = Todo()
+    todo.set('ad', j['data'])
+    todo.save()
+
+s.close()
